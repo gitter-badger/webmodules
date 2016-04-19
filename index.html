@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>WebModules by attrs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">WebModules</h1>
+      <h2 class="project-tagline">Module Management for Web Development</h2>
+      <a href="https://github.com/attrs/webmodules" class="btn">View on GitHub</a>
+      <a href="https://github.com/attrs/webmodules/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/attrs/webmodules/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="webmodules" class="anchor" href="#webmodules" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>webmodules</h1>
+
+<p><a href="https://npmjs.org/package/webmodules"><img src="https://img.shields.io/npm/v/webmodules.svg?style=flat" alt="NPM Version"></a> <a href="https://npmjs.org/package/webmodules"><img src="https://img.shields.io/npm/dm/webmodules.svg?style=flat" alt="NPM Downloads"></a></p>
+
+<p>Module Management for Web Development.</p>
+
+<p>Offers the following features:</p>
+
+<ul>
+<li>Installing web modules to <code>web_modules</code> folder to separate them from <code>node_modules</code>.</li>
+<li>Provides commonjs browser runtime that can be used in a webpage.</li>
+<li>Assist in installing external dependencies when using webpack and browserify.</li>
+</ul>
+
+<p>Goals:</p>
+
+<ul>
+<li>Provides straightforward way to install web modules.</li>
+<li>Separated installation of frontend modules and backend modules.</li>
+<li>Provide optimized module system for realtime frontend development.</li>
+<li>Optimized module building use only HTML page. (without a build scripts)</li>
+<li>Provide appropriate packaging system for webcomponents.</li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install -g webmodules</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="install-modules" class="anchor" href="#install-modules" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install Modules</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ wpm install                             <span class="pl-c"># install browserDependencies(package.json)</span>
+$ wpm install packagename                 <span class="pl-c"># from npm</span>
+$ wpm install packagename@version
+$ wpm install packagename --save          <span class="pl-c"># save to package.json</span>
+$ wpm install githubuser/project          <span class="pl-c"># from github</span>
+$ wpm install bitbucket:user/project      <span class="pl-c"># from bitbucket</span>
+$ wpm install bower:packagename           <span class="pl-c"># from bower</span>
+$ wpm install bower:packagename@version
+$ wpm install installname[packagename]    <span class="pl-c"># change module installation name</span>
+$ wpm install installname[bower:packagename]
+...</pre></div>
+
+<ul>
+<li>Packages are located in <code>web_modules</code> folder when installed .</li>
+<li>Also you can choose your own installation folder via <code>.webmodulesrc</code> file.  (but it's not applied to sub-modules)</li>
+</ul>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>directory<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<h3>
+<a id="use-browser-runtime-in-a-web-page" class="anchor" href="#use-browser-runtime-in-a-web-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use Browser Runtime in a Web Page</h3>
+
+<blockquote>
+<p>You can use browser runtime in a web page when you'd like to develop without a build process.
+supports es2015(<em>.es6), jsx(</em>.jsx), less(<em>.less), css(</em>.css), html(*.html)
+es2015/jsx are transpiled using <a href="https://github.com/Daniel15/babel-standalone"><code>babel-standalone</code></a></p>
+</blockquote>
+
+<h4>
+<a id="using-nodejs" class="anchor" href="#using-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Node.js</h4>
+
+<ul>
+<li><p>See <a href="./examples/runtime/">Example</a></p></li>
+<li><p>Prepare for example</p></li>
+</ul>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install -g webmodules
+$ npm install webmodules --save
+$ wpm install jquery d3 angular react react-dom --save</pre></div>
+
+<ul>
+<li>nodejs backend</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> http <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> express <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> webmodules <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>webmodules<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">express</span>()
+  .<span class="pl-en">use</span>(<span class="pl-s"><span class="pl-pds">'</span>/test<span class="pl-pds">'</span></span>, <span class="pl-smi">express</span>.<span class="pl-en">static</span>(<span class="pl-s"><span class="pl-pds">'</span>public<span class="pl-pds">'</span></span>))
+  .<span class="pl-en">use</span>(<span class="pl-s"><span class="pl-pds">'</span>/web_modules<span class="pl-pds">'</span></span>, <span class="pl-smi">webmodules</span>.<span class="pl-en">router</span>())
+  .<span class="pl-en">listen</span>(<span class="pl-c1">9000</span>, <span class="pl-k">function</span> () {
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>httpd listening on port 9000<span class="pl-pds">'</span></span>);
+  });</pre></div>
+
+<ul>
+<li>public/index.html</li>
+</ul>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+  &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/commonjs<span class="pl-pds">"</span></span> <span class="pl-e">data-src</span>=<span class="pl-s"><span class="pl-pds">"</span>js/app.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+<span class="pl-s1">  &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/web_modules/webmodules/runtime.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>content<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
+
+<ul>
+<li>public/js/app.js</li>
+</ul>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> path <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> $ <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>jquery<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> angular <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>angular<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> d3 <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>d3<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> react <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> reactdom <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>react-dom<span class="pl-pds">'</span></span>);
+
+<span class="pl-en">$</span>(<span class="pl-c1">document</span>).<span class="pl-en">ready</span>(<span class="pl-k">function</span>(<span class="pl-smi">$</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>module<span class="pl-pds">'</span></span>, <span class="pl-smi">require</span>.<span class="pl-smi">module</span>);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>jquery<span class="pl-pds">'</span></span>, $);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>angular<span class="pl-pds">'</span></span>, angular);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>d3<span class="pl-pds">'</span></span>, d3);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>, react);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>reactdom<span class="pl-pds">'</span></span>, reactdom);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>sub<span class="pl-pds">'</span></span>, sub);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span>, <span class="pl-smi">path</span>.<span class="pl-c1">join</span>(<span class="pl-c1">__dirname</span>, <span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>));
+
+  <span class="pl-k">var</span> CommentBox <span class="pl-k">=</span> <span class="pl-smi">react</span>.<span class="pl-en">createClass</span>({displayName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>CommentBox<span class="pl-pds">'</span></span>,
+    <span class="pl-en">render</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+      <span class="pl-k">return</span> (
+        <span class="pl-smi">react</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>div<span class="pl-pds">'</span></span>, {className<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>commentBox<span class="pl-pds">"</span></span>},
+          <span class="pl-s"><span class="pl-pds">"</span>Hello, world! I am a CommentBox.<span class="pl-pds">"</span></span>
+        )
+      );
+    }
+  });
+
+  <span class="pl-smi">reactdom</span>.<span class="pl-en">render</span>(
+    <span class="pl-smi">react</span>.<span class="pl-c1">createElement</span>(CommentBox, <span class="pl-c1">null</span>),
+    <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>content<span class="pl-pds">'</span></span>)
+  );
+});</pre></div>
+
+<h3>
+<a id="build-modules-with-webpack" class="anchor" href="#build-modules-with-webpack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build modules with <a href="http://webpack.github.io/docs/">webpack</a>
+</h3>
+
+<h4>
+<a id="install-webpack" class="anchor" href="#install-webpack" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install webpack</h4>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install -g webpack</pre></div>
+
+<h4>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h4>
+
+<p>create <code>webpack.config.js</code></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> {
+  <span class="pl-s"><span class="pl-pds">"</span>entry<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>app<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+      <span class="pl-s"><span class="pl-pds">"</span>./public/js/app.js<span class="pl-pds">"</span></span>
+    ]
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>output<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>dist/<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>filename<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>[name].js<span class="pl-pds">"</span></span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>externals<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>jquery<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>jQuery<span class="pl-pds">"</span></span>
+  }
+};</pre></div>
+
+<h4>
+<a id="build" class="anchor" href="#build" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build</h4>
+
+<div class="highlight highlight-source-shell"><pre>$ webpack</pre></div>
+
+<h3>
+<a id="publish-package-as-web-module" class="anchor" href="#publish-package-as-web-module" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Publish Package as Web Module</h3>
+
+<p>Please follow the notation method of package.json of <a href="https://github.com/substack/browserify-handbook#browser-field">Browserify</a>.</p>
+
+<h4>
+<a id="packagejson" class="anchor" href="#packagejson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>package.json</h4>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>your_package_name<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>version<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>0.0.0<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>main<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>nodejs_main_js<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>browser<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>public/js/app.js<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>browserDependencies<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>lodash<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>^4.11.1<span class="pl-pds">"</span></span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>browserPeerDependencies<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>jquery<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>^2.2.3<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>d3<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>bower:*<span class="pl-pds">"</span></span>
+  }
+  <span class="pl-ii">...</span>
+}</pre></div>
+
+<h4>
+<a id="publish" class="anchor" href="#publish" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>publish</h4>
+
+<div class="highlight highlight-source-shell"><pre>$ npm publish</pre></div>
+
+<h4>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h4>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h3>
+
+<p>Licensed under the MIT License.
+See <a href="./LICENSE">LICENSE</a> for the full license text.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/attrs/webmodules">WebModules</a> is maintained by <a href="https://github.com/attrs">attrs</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
